@@ -19,15 +19,15 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0  border-b shadow-sm flex items-center justify-between h-16 md:px-40 px-6 bg-white z-50">
+    <nav className="fixed top-0 left-0 right-0 border-b bg-background shadow-sm flex items-center justify-between h-16 md:px-40 px-6 z-50">
       {/* Left side: Logo */}
       <div className="flex items-center gap-2">
         <Link href="/">
           <Image
-            src="/afripay-logo.svg"
+            src="/afripay-logo.png"
             alt="Afripay Logo"
-            width={150}
-            height={150}
+            width={80}
+            height={80}
             priority
           />
         </Link>
@@ -41,7 +41,9 @@ export default function Navbar() {
             variant="ghost"
             key={link.href}
             className={
-              pathname === link.href ? "text-orange-500 font-bold" : ""
+              pathname === link.href
+                ? "text-primary font-bold"
+                : "text-foreground"
             }
           >
             <Link href={link.href}>{link.label}</Link>
@@ -57,10 +59,7 @@ export default function Navbar() {
         <Button variant="outline" asChild>
           <Link href="/create-wallet">Create a Wallet</Link>
         </Button>
-        <Button
-          className="bg-orange-500 hover:bg-orange-600 text-white rounded-full"
-          asChild
-        >
+        <Button className="btn-primary rounded-full" asChild>
           <Link href="/auth/login">Login</Link>
         </Button>
       </div>
@@ -78,7 +77,7 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-lg font-medium"
+                className="text-lg font-medium text-foreground"
               >
                 {link.label}
               </Link>
@@ -87,10 +86,7 @@ export default function Navbar() {
               <Button asChild variant="outline">
                 <Link href="/create-wallet">Create a Wallet</Link>
               </Button>
-              <Button
-                className="bg-orange-500 hover:bg-orange-600 text-white rounded-full"
-                asChild
-              >
+              <Button className="btn-primary rounded-full" asChild>
                 <Link href="/auth/login">Login</Link>
               </Button>
             </div>

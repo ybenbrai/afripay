@@ -25,7 +25,7 @@ export default function HeroSection({
         <p className="text-muted-foreground">{description}</p>
         <Button
           asChild
-          className="bg-primary text-primary-foreground hover:opacity-90 w-fit"
+          className="btn-primary text-primary-foreground hover:opacity-90 w-fit"
         >
           <a href={buttonHref}>{buttonText}</a>
         </Button>
