@@ -1,26 +1,25 @@
 "use client";
 
 import { useState } from "react";
+import AuthButtons from "@/components/navbar/AuthButtons";
+import { NAV_LINKS } from "@/lib/constants/navLinks";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Search } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
-import RegisterLoginModal from "@/components/RegisterLoginModal";
+import RegisterLoginModal from "@/components/auth/RegisterLoginModal";
 
 export default function Navbar() {
   const pathname = usePathname();
   const [modalOpen, setModalOpen] = useState(false);
   const [modalStep, setModalStep] = useState<"login" | "register">("login");
 
-  const links = [
-    { href: "/home", label: "Payments and transfers" },
-    { href: "/replenishment", label: "Replenishment" },
-    { href: "/cards", label: "Cards" },
-    { href: "/help", label: "Help" },
-    { href: "/available", label: "Available in Morocco" },
-  ];
+  const openModal = (step: "login" | "register") => {
+    setModalStep(step);
+    setModalOpen(true);
+  };
 
   return (
     <>
@@ -44,7 +43,7 @@ export default function Navbar() {
         </div>
 
         <div className="hidden md:flex gap-6 items-center">
-          {links.map((link) => (
+          {NAV_LINKS.map((link) => (
             <Button
               asChild
               variant="ghost"
@@ -64,24 +63,7 @@ export default function Navbar() {
           <Button variant="ghost" size="icon">
             <Search className="w-5 h-5" />
           </Button>
-          <Button
-            variant="outline"
-            onClick={() => {
-              setModalStep("register");
-              setModalOpen(true);
-            }}
-          >
-            Create a Wallet
-          </Button>
-          <Button
-            className="btn-primary rounded-full"
-            onClick={() => {
-              setModalStep("login");
-              setModalOpen(true);
-            }}
-          >
-            Login
-          </Button>
+          <AuthButtons onOpen={openModal} />
         </div>
 
         <div className="flex md:hidden">
@@ -92,7 +74,7 @@ export default function Navbar() {
               </Button>
             </SheetTrigger>
             <SheetContent side="left" className="p-6 flex flex-col gap-4">
-              {links.map((link) => (
+              {NAV_LINKS.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
@@ -102,24 +84,7 @@ export default function Navbar() {
                 </Link>
               ))}
               <div className="mt-6 flex flex-col gap-3">
-                <Button
-                  variant="outline"
-                  onClick={() => {
-                    setModalStep("register");
-                    setModalOpen(true);
-                  }}
-                >
-                  Create a Wallet
-                </Button>
-                <Button
-                  className="btn-primary rounded-full"
-                  onClick={() => {
-                    setModalStep("login");
-                    setModalOpen(true);
-                  }}
-                >
-                  Login
-                </Button>
+                <AuthButtons onOpen={openModal} />
               </div>
             </SheetContent>
           </Sheet>

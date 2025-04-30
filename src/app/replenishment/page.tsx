@@ -4,12 +4,14 @@ import HeroSection from "@/components/HeroSection";
 import GameCategoryTag from "@/components/GameCategoryTag";
 import GameCard from "@/components/GameCard";
 
-export default function HomePage() {
+export default function ReplenishmentPage() {
   return (
     <>
       <AnnouncementBanner />
       <PageContainer>
         <HeroSection />
+
+        {/* Categories */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 my-12">
           <GameCategoryTag
             iconSrc="/steam-icon.png"
@@ -23,6 +25,8 @@ export default function HomePage() {
           />
           <GameCategoryTag iconSrc="/pubg-icon.png" label="PUBG" href="/pubg" />
         </div>
+
+        {/* Services / Features */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-12">
           <GameCard
             title="Recharge Wallet Easily"

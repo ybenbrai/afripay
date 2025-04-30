@@ -11,7 +11,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
-import { authService } from "@/lib/AuthService";
+import { authService } from "@/lib/api/AuthService";
+import { useAuth } from "@/app/context/auth-context";
 
 type Step = "login" | "register";
 
@@ -26,9 +27,10 @@ export default function RegisterLoginModal({
 }) {
   const [step, setStep] = useState<Step>(initialStep);
   const [loading, setLoading] = useState(false);
-  const [phone, setPhone] = useState("");
+  const [phoneNumber, setPhone] = useState("");
   const [password, setPassword] = useState("");
-  const [captcha, setCaptcha] = useState("");
+
+  const { login } = useAuth();
 
   useEffect(() => {
     if (open) setStep(initialStep);
@@ -38,9 +40,10 @@ export default function RegisterLoginModal({
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await authService.login({ phone, password });
+      const response = await authService.login({ phoneNumber, password });
+      const token = response.data;
+      login(token);
       toast.success("Logged in!");
-      console.log(response.data);
       onOpenChange(false);
     } catch (error) {
       console.error(error);
@@ -54,7 +57,7 @@ export default function RegisterLoginModal({
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await authService.register({ phone, captcha });
+      const response = await authService.register({ phoneNumber, password });
       toast.success("Wallet created!");
       console.log(response.data);
       onOpenChange(false);
@@ -80,7 +83,7 @@ export default function RegisterLoginModal({
             <Input
               type="tel"
               placeholder="Phone number"
-              value={phone}
+              value={phoneNumber}
               onChange={(e) => setPhone(e.target.value)}
               required
             />
@@ -112,14 +115,15 @@ export default function RegisterLoginModal({
             <Input
               type="tel"
               placeholder="Phone number"
-              value={phone}
+              value={phoneNumber}
               onChange={(e) => setPhone(e.target.value)}
               required
             />
             <Input
-              placeholder="Enter CAPTCHA"
-              value={captcha}
-              onChange={(e) => setCaptcha(e.target.value)}
+              type="password"
+              placeholder="Enter Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               required
             />
             <Button type="submit" className="btn-primary w-full">

@@ -1,9 +1,9 @@
 export interface LoginPayload {
-  phone: string;
+  phoneNumber: string;
   password: string;
 }
 
 export interface RegisterPayload {
-  phone: string;
-  captcha: string;
+  phoneNumber: string;
+  password: string;
 }

@@ -1,4 +1,4 @@
-import { httpClient } from "./httpClient";
+import { httpClient } from "../httpClient";
 import type { LoginPayload, RegisterPayload } from "@/types/auth";
 
 export const authService = {
